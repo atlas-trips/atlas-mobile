@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Styelsheet, Text, View } from 'react-native';
+import { Styelsheet, Text, SafeAreaView } from 'react-native';
+import { connect } from 'react-redux';
 
 class UserScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       users: [],
-      mounted: false
+      mounted: false,
     };
   }
-
-  static navigationOptions = {
-    title: 'Welcome to Atlas'
-  };
 
   async componentDidMount() {
     const res = await axios.get('http://atlas-trips.herokuapp.com/api/users');
@@ -24,13 +21,15 @@ class UserScreen extends Component {
 
   render() {
     return !this.state.mounted ? null : (
-      <View>
-        {this.state.users.map(user => (
-          <Text key={user.id}>{user.email}</Text>
-        ))}
-      </View>
+      <SafeAreaView>
+        <Text>WHAT UP {this.props.user.name}</Text>
+      </SafeAreaView>
     );
   }
 }
 
-export default UserScreen;
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps)(UserScreen);
