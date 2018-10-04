@@ -3,13 +3,13 @@ import {
   createBottomTabNavigator,
 } from 'react-navigation';
 import LoginScreen from './Components/LoginScreen';
-import UserScreen from './Components/UserScreen';
+import DashboardScreen from './Components/DashboardScreen';
 import React from 'react';
 
 const Stack = createBottomTabNavigator(
   {
     Login: { screen: LoginScreen },
-    User: { screen: UserScreen },
+    Dashboard: { screen: DashboardScreen },
   },
   {
     initialRouteName: 'Login',

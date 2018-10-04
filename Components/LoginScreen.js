@@ -20,10 +20,10 @@ class LoginScreen extends Component {
     this.handlePress = this.handlePress.bind(this);
   }
 
-  handlePress() {
+  async handlePress() {
     const { email, password, formName } = this.state;
-    this.props.submitLogin(email, password, formName);
-    this.props.navigation.navigate('User');
+    await this.props.submitLogin(email, password, formName);
+    this.props.navigation.navigate('Dashboard');
   }
 
   static navigationOptions = {
@@ -31,7 +31,6 @@ class LoginScreen extends Component {
   };
   render() {
     const { navigate } = this.props.navigation;
-    console.log('PROPPSPSS', this.props);
     return (
       <SafeAreaView>
         <Text>Welcome to Login!</Text>
