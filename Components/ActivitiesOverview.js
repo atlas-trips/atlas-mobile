@@ -1,5 +1,6 @@
 import React from 'react';
-import { Styelsheet, Text, SafeAreaView, View } from 'react-native';
+import { Styelsheet, Text, SafeAreaView, View, Button } from 'react-native';
+import { withNavigation } from 'react-navigation';
 
 const ActivitiesOverview = props => {
   return (
@@ -12,10 +13,13 @@ const ActivitiesOverview = props => {
           </View>
         );
       })}
-      ...
-      {/* <Link to="/activities">See more</Link> */}
+      <Text>...</Text>
+      <Button
+        title="See more"
+        onPress={() => props.navigation.navigate('Activities')}
+      />
     </SafeAreaView>
   );
 };
 
-export default ActivitiesOverview;
+export default withNavigation(ActivitiesOverview);
