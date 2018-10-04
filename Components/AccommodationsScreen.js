@@ -2,6 +2,8 @@ import React from 'react';
 import {getAccommodations} from '../store/accommodation';
 import {connect} from 'react-redux';
 import { Styelsheet, Text, SafeAreaView, View } from 'react-native';
+import Navbar from './Navbar';
+
 
 class AccommodationsScreen extends React.Component {
   constructor(props) {
@@ -14,7 +16,8 @@ class AccommodationsScreen extends React.Component {
   }
   render() {
     return (
-      <SafeAreaView>
+      <View>
+        <Navbar />
         {this.props.accommodations.length > 0
           ? this.props.accommodations.map(accom => {
               return (
@@ -29,7 +32,7 @@ class AccommodationsScreen extends React.Component {
               );
             })
           : 'No Accommodations Booked'}
-      </SafeAreaView>
+      </View>
     );
   }
 }

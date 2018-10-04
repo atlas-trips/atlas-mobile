@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {sendActivityInfo, fetchActivities} from '../store/trip';
 import { Styelsheet, Text, SafeAreaView, View } from 'react-native';
 // import MapWithASearchBox from './SearchMap';
+import Navbar from './Navbar';
 
 class Activities extends Component {
   constructor(props) {
@@ -47,7 +48,8 @@ class Activities extends Component {
 
   render() {
     return (
-      <SafeAreaView>
+      <View>
+        <Navbar />
         {/* <div style={activitiesOverview}>
           <div style={{marginLeft: '100px'}}>
             <div>
@@ -93,7 +95,7 @@ class Activities extends Component {
                 })
               }
           </View>
-      </SafeAreaView>
+      </View>
     );
   }
 }
