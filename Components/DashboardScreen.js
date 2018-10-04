@@ -24,6 +24,7 @@ class Dashboard extends Component {
 
   render() {
     const {user} = this.props
+    const { navigate } = this.props.navigation;
     if (this.props.trips.length > 0) {
       return (
         <SafeAreaView>

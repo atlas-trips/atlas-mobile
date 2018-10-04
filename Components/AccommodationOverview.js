@@ -1,5 +1,6 @@
 import React from 'react';
-import { Styelsheet, Text, SafeAreaView, View } from 'react-native';
+import { Styelsheet, Text, TouchableOpacity, View, Button } from 'react-native';
+import { withNavigation } from 'react-navigation';
 
 const AccommodationOverview = props => {
   return (
@@ -12,10 +13,13 @@ const AccommodationOverview = props => {
           </View>
         );
       })}
-      ...
-      {/* <Link to="/accommodations">See more</Link> */}
+      <Text>...</Text>
+      <Button
+        onPress={() => props.navigation.navigate('Accommodations')}
+        title='See more'
+      />
     </View>
   );
 };
 
-export default AccommodationOverview;
+export default withNavigation(AccommodationOverview);
