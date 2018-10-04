@@ -5,6 +5,7 @@ import CalendarActivities from './CalendarActivities';
 import CalendarAccommodations from './CalendarAccommodations';
 import CalendarTransportation from './CalendarTransportation';
 import { Styelsheet, Text, SafeAreaView, View, ScrollView } from 'react-native';
+import Navbar from './Navbar';
 
 class CalendarScreen extends Component {
   constructor(props) {
@@ -18,7 +19,8 @@ class CalendarScreen extends Component {
   render() {
     const {schedule} = this.props;
     return schedule.length ? (
-      <SafeAreaView>
+      <View>
+        <Navbar />
         <ScrollView>
           {schedule.map((day, i) => {
             return (
@@ -52,11 +54,12 @@ class CalendarScreen extends Component {
             );
           })}
         </ScrollView>
-      </SafeAreaView>
+      </View>
     ) : (
-      <SafeAreaView>
+      <View>
+        <Navbar />
         <Text>nothing currently scheduled...</Text>
-      </SafeAreaView>
+      </View>
     );
   }
 }

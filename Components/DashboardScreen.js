@@ -4,6 +4,7 @@ import AllTrips from './AllTrips'
 import SingleTrip from './SingleTrip'
 import {fetchTrips, fetchSelected} from '../store/trip'
 import { Styelsheet, Text, SafeAreaView, View } from 'react-native';
+import Navbar from './Navbar';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -26,18 +27,15 @@ class Dashboard extends Component {
     const {user} = this.props
     const { navigate } = this.props.navigation;
     if (this.props.trips.length > 0) {
-      return (
-        <SafeAreaView>
-          {this.state.selected ? (
-            <View>
-              <Text>{user.name}'s Trip:</Text>
-              <SingleTrip trip={this.props.selected} />
-            </View>
-          ) : (
-            <AllTrips trips={this.props.trips} press={this.handlePress} />
-          )}
-        </SafeAreaView>
-      )
+      return this.state.selected ? (
+          <View>
+            <Navbar />
+            <Text>{user.name}'s Trip:</Text>
+            <SingleTrip trip={this.props.selected} />
+          </View>
+        ) : (
+          <AllTrips trips={this.props.trips} press={this.handlePress} />
+        )
     } else {
       return (
         <SafeAreaView>
