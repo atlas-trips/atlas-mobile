@@ -3,7 +3,6 @@ import { Styelsheet, Text, SafeAreaView, View} from 'react-native';
 import ParticipantsOverview from './ParticipantsOverview'
 import ActivitiesOverview from './ActivitiesOverview'
 import AccommodationOverview from './AccommodationOverview'
-import Navbar from './Navbar';
 
 const SingleTrip = props => {
   const trip = props.trip
