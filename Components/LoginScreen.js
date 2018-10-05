@@ -30,7 +30,6 @@ class LoginScreen extends Component {
     title: 'Welcome to Atlas',
   };
   render() {
-    const { navigate } = this.props.navigation;
     return (
       <SafeAreaView>
         <Text>Welcome to Login!</Text>
