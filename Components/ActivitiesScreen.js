@@ -15,8 +15,8 @@ class Activities extends Component {
     this.props.fetchActivities(this.props.trip.id);
   }
 
-  handlePress() {
-    AppLink.maybeOpenURL('https://www.google.com/maps/search/?api=1&query=City+Hall%2C+New+York%2C+NY', { appName:'Google Maps - Transit & Food', appStoreId: '585027354', appStoreLocale: 'us' })
+  handlePress(location) {
+    AppLink.maybeOpenURL(`https://www.google.com/maps/search/?api=1&query=${location}`, { appName:'Google Maps - Transit & Food', appStoreId: '585027354', appStoreLocale: 'us' })
     .catch((err) => {
       console.log(err)
     });
@@ -33,7 +33,7 @@ class Activities extends Component {
                 : this.props.trip.activities.map(activity => {
                     return (
                       <TouchableOpacity
-                        onPress={this.handlePress}
+                        onPress={() => this.handlePress(activity.location)}
                         key={activity.id}
                       >
                         <Text>{activity.name}</Text>
