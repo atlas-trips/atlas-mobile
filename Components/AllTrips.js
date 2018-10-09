@@ -50,12 +50,16 @@ const AllTrips = props => {
 
 const styles = StyleSheet.create({
   tripCard: {
-    // justifyContent: 'space-evenly',
     alignItems: 'center',
     width: 300,
     height: 300,
     backgroundColor: '#004f78',
     margin: 10,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    borderRadius: 4,
   },
   container: {
     display: 'flex',
