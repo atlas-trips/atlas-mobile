@@ -14,8 +14,8 @@ class Dashboard extends Component {
     };
     this.handlePress = this.handlePress.bind(this);
   }
-  async componentDidMount() {
-    await this.props.fetchTrips(this.props.user.id);
+  componentDidMount() {
+    this.props.fetchTrips(this.props.user.id);
   }
 
   async handlePress(id) {
@@ -24,32 +24,29 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { user } = this.props;
     const { navigate } = this.props.navigation;
-    if (this.props.trips.length > 0) {
-      return this.state.selected ? (
+    return (
+      <View>
+        <Navbar />
         <View>
-          <Navbar />
-          <Text>
-            {user.name}
-            's Trip:
-          </Text>
-          <SingleTrip trip={this.props.selected} />
+          {this.props.trips.length > 0 ? (
+            <AllTrips trips={this.props.trips}/>
+          ) : (
+            <SafeAreaView>
+              <Text>No Trips Available</Text>
+            </SafeAreaView>
+          )}
         </View>
-      ) : (
-        <AllTrips trips={this.props.trips} press={this.handlePress} />
-      );
-    } else {
-      return (
-        <SafeAreaView>
-          <Text>No Trips Available</Text>
-        </SafeAreaView>
-      );
-    }
+      </View>
+    )
   }
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  }
+});
 
 const mapStateToProps = state => ({
   user: state.user,
