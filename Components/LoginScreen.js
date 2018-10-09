@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import {
-  Styelsheet,
+  StyleSheet,
   Text,
   SafeAreaView,
   TextInput,
-  TouchableHighlight,
+  TouchableHighlight
 } from 'react-native';
 import { connect } from 'react-redux';
 import { auth } from '../store/store';
+import LoginBackground from './LoginBackground';
 
 class LoginScreen extends Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class LoginScreen extends Component {
     this.state = {
       email: '',
       password: '',
-      formName: 'login',
+      formName: 'login'
     };
     this.handlePress = this.handlePress.bind(this);
   }
@@ -27,52 +28,66 @@ class LoginScreen extends Component {
   }
 
   static navigationOptions = {
-    title: 'Welcome to Atlas',
+    title: 'Welcome to Atlas'
   };
   render() {
     return (
-      <SafeAreaView>
-        <Text>Welcome to Login!</Text>
-        <Text>Email: </Text>
-        <TextInput
-          style={{
-            width: 200,
-            height: 50,
-            backgroundColor: 'blue',
-            color: 'white',
-            fontSize: 25,
-          }}
-          value={this.state.email}
-          onChangeText={text => this.setState({ email: text.toLowerCase() })}
-        />
-        <Text>Password: </Text>
-        <TextInput
-          style={{
-            width: 200,
-            height: 50,
-            backgroundColor: 'blue',
-            color: 'white',
-            fontSize: 25,
-          }}
-          value={this.state.password}
-          secureTextEntry={true}
-          onChangeText={text => this.setState({ password: text })}
-        />
-        <TouchableHighlight onPress={this.handlePress}>
-          <Text>LOG IN!</Text>
-        </TouchableHighlight>
-      </SafeAreaView>
+      <LoginBackground>
+        <SafeAreaView style={styles.loginContainer}>
+          <Text>Welcome to Login!</Text>
+          <Text>Email: </Text>
+          <TextInput
+            style={styles.input}
+            value={this.state.email}
+            onChangeText={text => this.setState({ email: text.toLowerCase() })}
+          />
+          <Text>Password: </Text>
+          <TextInput
+            style={styles.input}
+            value={this.state.password}
+            secureTextEntry={true}
+            onChangeText={text => this.setState({ password: text })}
+          />
+          <TouchableHighlight style={styles.button} onPress={this.handlePress}>
+            <Text>LOG IN!</Text>
+          </TouchableHighlight>
+        </SafeAreaView>
+      </LoginBackground>
     );
   }
 }
 
+const styles = StyleSheet.create({
+  loginContainer: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  input: {
+    width: 200,
+    height: 50,
+    backgroundColor: 'white',
+    color: 'black',
+    fontSize: 25
+  },
+  button: {
+    alignItems: 'center',
+    backgroundColor: '#32bcf2',
+    margin: 10,
+    width: 200,
+    height: 60,
+    borderRadius: 10,
+    marginLeft: 50,
+    marginRight: 50
+  }
+});
+
 const mapStateToProps = state => ({
-  user: state.user,
+  user: state.user
 });
 
 const mapDispatch = dispatch => ({
   submitLogin: (email, password, formName) =>
-    dispatch(auth(email, password, formName)),
+    dispatch(auth(email, password, formName))
 });
 
 export default connect(
