@@ -1,6 +1,8 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import { fetchSelected } from '../store/trip';
 import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Image } from 'react-native';
+import { withNavigation } from 'react-navigation';
 
 const images = {
   vegas: require('../assets/images/vegas.jpg'),
@@ -8,8 +10,11 @@ const images = {
 }
 
 const AllTrips = props => {
+  const handlePress = async id => {
+    await props.fetchSelected(id);
+    props.navigation.navigate('My Trip')
+  }
   const trips = props.trips
-
   return !trips.length ? null : (
     <ScrollView contentContainerStyle={styles.container}>
       {trips.map(trip => {
@@ -17,7 +22,7 @@ const AllTrips = props => {
         return (
           <View key={trip.name} style={styles.tripCard}>
             <TouchableOpacity
-              onPress={() => props.press(trip.id)}
+              onPress={() => handlePress(trip.id)}
               style={styles.tripCardContent}
             >
               <Text style={styles.tripName}>{trip.name}</Text>
@@ -103,7 +108,12 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  user: state.user
+  user: state.user,
+  // selected: state.trip.selected,
 })
 
-export default connect(mapStateToProps)(AllTrips)
+const mapDispatchToProps = dispatch => ({
+  fetchSelected: tripId => dispatch(fetchSelected(tripId))
+})
+
+export default withNavigation(connect(mapStateToProps, mapDispatchToProps)(AllTrips));
