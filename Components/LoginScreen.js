@@ -4,7 +4,9 @@ import {
   Text,
   SafeAreaView,
   TextInput,
-  TouchableHighlight
+  TouchableHighlight,
+  Image,
+  View
 } from 'react-native';
 import { connect } from 'react-redux';
 import { auth } from '../store/store';
@@ -28,29 +30,31 @@ class LoginScreen extends Component {
   }
 
   static navigationOptions = {
-    title: 'Welcome to Atlas'
+    title: 'Login'
   };
   render() {
     return (
       <LoginBackground>
         <SafeAreaView style={styles.loginContainer}>
-          <Text>Welcome to Login!</Text>
-          <Text>Email: </Text>
-          <TextInput
-            style={styles.input}
-            value={this.state.email}
-            onChangeText={text => this.setState({ email: text.toLowerCase() })}
-          />
-          <Text>Password: </Text>
-          <TextInput
-            style={styles.input}
-            value={this.state.password}
-            secureTextEntry={true}
-            onChangeText={text => this.setState({ password: text })}
-          />
-          <TouchableHighlight style={styles.button} onPress={this.handlePress}>
-            <Text>LOG IN!</Text>
-          </TouchableHighlight>
+          <Image source={require('../assets/images/logo.png')} />
+          <View style={styles.inputsContainer}>
+            <Text style={styles.text}>Email:</Text>
+            <TextInput
+              style={styles.input}
+              value={this.state.email}
+              onChangeText={text => this.setState({ email: text.toLowerCase() })}
+            />
+            <Text style={[styles.text, {marginTop: 10}]}>Password:</Text>
+            <TextInput
+              style={styles.input}
+              value={this.state.password}
+              secureTextEntry={true}
+              onChangeText={text => this.setState({ password: text })}
+            />
+            <TouchableHighlight style={styles.button} onPress={this.handlePress}>
+              <Text style={styles.logInText}>LOG IN</Text>
+            </TouchableHighlight>
+          </View>
         </SafeAreaView>
       </LoginBackground>
     );
@@ -67,7 +71,8 @@ const styles = StyleSheet.create({
     height: 50,
     backgroundColor: 'white',
     color: 'black',
-    fontSize: 25
+    fontSize: 20,
+    paddingLeft: 3,
   },
   button: {
     alignItems: 'center',
@@ -77,7 +82,21 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 10,
     marginLeft: 50,
-    marginRight: 50
+    marginRight: 50,
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  text: {
+    color: 'white',
+    fontSize: 18,
+  },
+  inputsContainer: {
+    marginTop: 50,
+    alignItems: 'center',
+  },
+  logInText: {
+    color: 'white',
+    fontSize: 20,
   }
 });
 

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import AllTrips from './AllTrips';
 import SingleTrip from './SingleTrip';
 import { fetchTrips, fetchSelected } from '../store/trip';
-import { StyelSheet, Text, SafeAreaView, View } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View } from 'react-native';
 import Navbar from './Navbar';
 
 class Dashboard extends Component {
