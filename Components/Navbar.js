@@ -1,12 +1,12 @@
 import React from 'react';
 import { withNavigation } from 'react-navigation'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 
 const Navbar = (props) => {
   return (
     <View style={styles.nav}>
       <TouchableOpacity
-        style={styles.buttonContainer}
+        style={[styles.buttonContainer, {marginRight: 15}]}
         onPress={() => props.navigation.navigate('Dashboard')}
       >
         <Text style={styles.button}>Dashboard</Text>
@@ -15,7 +15,10 @@ const Navbar = (props) => {
         style={styles.buttonContainer}
         onPress={() => props.navigation.toggleDrawer()}
       >
-        <Text style={styles.button}>More</Text>
+        <View style={styles.insideButton}>
+          <Text style={styles.button}>More</Text>
+          <Image style={styles.pic} source={require('../assets/images/hamburger.png')} />
+        </View>
       </TouchableOpacity>
     </View>
   );
@@ -36,7 +39,17 @@ const styles= StyleSheet.create({
   buttonContainer: {
     marginTop: 50,
     marginLeft: 8,
-    marginRight: 8,
+    marginRight: 15,
+  },
+  pic: {
+    width: 20,
+    height: 20,
+    marginTop: 3,
+    marginLeft: 2,
+  },
+  insideButton: {
+    display: 'flex',
+    flexDirection: 'row',
   }
 })
 

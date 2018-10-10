@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, SafeAreaView, View, Button} from 'react-native';
+import { StyleSheet, Text, ScrollView, View, Button} from 'react-native';
 import ParticipantsOverview from './ParticipantsOverview'
 import ActivitiesOverview from './ActivitiesOverview'
 import AccommodationOverview from './AccommodationOverview'
@@ -10,17 +10,22 @@ import { withNavigation } from 'react-navigation';
 const SingleTrip = props => {
   const trip = props.trip
   return trip.name ? (
-    <SafeAreaView>
-      <Text>
-        {trip.name}: {trip.startDate.slice(0, 10)} to{' '}
-        {trip.endDate.slice(0, 10)}
-      </Text>
-      <View>
-        <ParticipantsOverview peeps={trip.users} />
-        <ActivitiesOverview activities={trip.activities} />
-        <AccommodationOverview accommodations={trip.accommodation} />
-      </View>
-    </SafeAreaView>
+    <View>
+      <Navbar />
+      <ScrollView>
+        <Text style={styles.tripTitle}>
+          {trip.name}
+        </Text>
+        <Text style={styles.dates}>
+          {(new Date (trip.startDate.slice(0, 10))).toString().slice(0,16)} to{(new Date (trip.endDate.slice(0, 10))).toString().slice(0,16)}
+        </Text>
+        <View style={styles.container}>
+          <ParticipantsOverview peeps={trip.users} />
+          <ActivitiesOverview activities={trip.activities} />
+          <AccommodationOverview accommodations={trip.accommodation} />
+        </View>
+      </ScrollView>
+    </View>
   ) : (
     <View>
       <Navbar />
@@ -41,6 +46,20 @@ const styles = StyleSheet.create({
     color: '#53aad9',
     marginBottom: -5,
     marginTop: 15
+  },
+  tripTitle: {
+    fontSize: 35,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: '#c60057',
+  },
+  dates: {
+    color: '#004f78',
+    fontSize: 13,
+    textAlign: 'center',
+  },
+  container: {
+    alignItems: 'center',
   }
 })
 
