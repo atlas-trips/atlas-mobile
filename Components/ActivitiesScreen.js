@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { fetchActivities } from '../store/trip';
-import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, Button } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, Image, Button } from 'react-native';
 import Navbar from './Navbar';
 import AppLink from 'react-native-app-link';
+const openIcon = require('../assets/images/open.png')
 
 
 class Activities extends Component {
@@ -26,22 +27,28 @@ class Activities extends Component {
     return this.props.trip.name ? (
       <View>
         <Navbar />
-          <View >
-            <Text>Activities List:</Text>
-              {!this.props.trip.activities.length
-                ? null
-                : this.props.trip.activities.map(activity => {
-                    return (
-                      <TouchableOpacity
-                        onPress={() => this.handlePress(activity.location)}
-                        key={activity.id}
-                      >
-                        <Text>{activity.name}</Text>
-                      </TouchableOpacity>
-                    );
-                })
-              }
-          </View>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Activities List:</Text>
+        </View>
+        <View style={styles.container}>
+        {!this.props.trip.activities.length
+            ? null
+            : this.props.trip.activities.map(activity => {
+              return (       
+                <View key={activity.id}>
+                  <TouchableOpacity
+                  onPress={() => this.handlePress(activity.location)}
+                  >
+                 <View style={styles.activityContainer}  >
+                  <Text style={{fontSize: 20}}>{activity.name}</Text>
+                  <Image source={openIcon} style={{height: 25, width: 25}} />
+                </View>
+                </TouchableOpacity>
+                </View>
+              );
+            })
+          }
+        </View>
       </View>
     ) : (
       <View>
@@ -57,15 +64,6 @@ class Activities extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  noTrip: {
-    textAlign: 'center',
-    fontSize: 20,
-    color: '#53aad9',
-    marginBottom: -5,
-    marginTop: 15
-  },
-})
 
 const mapStateToProps = state => ({
   user: state.user,
@@ -77,5 +75,42 @@ const mapDispatchToProps = dispatch => {
     fetchActivities: id => dispatch(fetchActivities(id))
   };
 };
+
+const styles = StyleSheet.create({
+  header: {
+    backgroundColor: '#00adef'
+  },
+
+  headerText: {
+    color: 'white',
+    fontSize: 30,
+    textAlign: 'center'
+  },
+  container: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    width: '100%'
+  },
+  activityContainer: {
+    display: 'flex',
+    marginTop: 20,
+    marginBottom: 20,
+    height: 70,
+    width: 300,
+    borderRadius: 10,
+    backgroundColor: '#ddeaff', 
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  noTrip: {
+    textAlign: 'center',
+    fontSize: 20,
+    color: '#53aad9',
+    marginBottom: -5,
+    marginTop: 15
+  }
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Activities);

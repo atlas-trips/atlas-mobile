@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     fontSize: 35,
     fontWeight: 'bold',
     justifyContent: 'center',
-    fontFamily: 'Copperplate'
+    fontFamily: 'Roboto'
   },
   tripCardContent: {
     display: 'flex',
