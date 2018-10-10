@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { fetchActivities } from '../store/trip';
-import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, Image, Button } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Image, Button } from 'react-native';
 import Navbar from './Navbar';
 import AppLink from 'react-native-app-link';
 const openIcon = require('../assets/images/open.png')
@@ -30,16 +30,16 @@ class Activities extends Component {
         <View style={styles.header}>
           <Text style={styles.headerText}>Activities List:</Text>
         </View>
-        <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.container}>
         {!this.props.trip.activities.length
             ? null
             : this.props.trip.activities.map(activity => {
-              return (       
+              return (
                 <View key={activity.id}>
                   <TouchableOpacity
                   onPress={() => this.handlePress(activity.location)}
                   >
-                 <View style={styles.activityContainer}  >
+                <View style={styles.activityContainer}  >
                   <Text style={{fontSize: 20}}>{activity.name}</Text>
                   <Image source={openIcon} style={{height: 25, width: 25}} />
                 </View>
@@ -48,7 +48,7 @@ class Activities extends Component {
               );
             })
           }
-        </View>
+        </ScrollView>
       </View>
     ) : (
       <View>
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     height: 70,
     width: 300,
     borderRadius: 10,
-    backgroundColor: '#ddeaff', 
+    backgroundColor: '#ddeaff',
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',

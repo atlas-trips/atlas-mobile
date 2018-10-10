@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import { fetchSelected } from '../store/trip';
-import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Image, Platform } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
 const images = {
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     fontSize: 35,
     fontWeight: 'bold',
     justifyContent: 'center',
-    fontFamily: 'Roboto'
+    fontFamily: Platform.OS === 'ios' ? 'Copperplate': 'Roboto',
   },
   tripCardContent: {
     display: 'flex',
