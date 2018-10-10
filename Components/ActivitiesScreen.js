@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { fetchActivities } from '../store/trip';
-import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, Image, Button } from 'react-native';
 import Navbar from './Navbar';
 import AppLink from 'react-native-app-link';
 const openIcon = require('../assets/images/open.png')
@@ -24,8 +24,8 @@ class Activities extends Component {
   }
 
   render() {
-    return (
-      <View >
+    return this.props.trip.name ? (
+      <View>
         <Navbar />
         <View style={styles.header}>
           <Text style={styles.headerText}>Activities List:</Text>
@@ -49,9 +49,29 @@ class Activities extends Component {
         
         </View>
       </View>
-    );
+    ) : (
+      <View>
+        <Navbar />
+        <View>
+          <Text style={styles.noTrip}>
+            You have not yet selected a trip. Please choose one from your
+          </Text>
+          <Button onPress={() => props.navigation.navigate('Dashboard')} title="dashboard."/>
+        </View>
+      </View>
+    )
   }
 }
+
+const styles = StyleSheet.create({
+  noTrip: {
+    textAlign: 'center',
+    fontSize: 20,
+    color: '#53aad9',
+    marginBottom: -5,
+    marginTop: 15
+  },
+})
 
 const mapStateToProps = state => ({
   user: state.user,
