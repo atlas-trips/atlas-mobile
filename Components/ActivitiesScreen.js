@@ -48,7 +48,6 @@ class Activities extends Component {
               );
             })
           }
-        
         </View>
       </View>
     ) : (
