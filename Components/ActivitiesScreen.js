@@ -17,7 +17,7 @@ class Activities extends Component {
   }
 
   handlePress(activity) {
-    AppLink.maybeOpenURL(`https://www.google.com/maps/search/?api=1&query=${activity.location}${activity.placeID? '&query_place_id='+activity.placeID : ''}`, { appName:'Google Maps - Transit & Food', appStoreId: '585027354', appStoreLocale: 'us' })
+    AppLink.maybeOpenURL(`https://www.google.com/maps/search/?api=1&query=${activity.location}${activity.placeID ? '&query_place_id='+activity.placeID : ''}`, { appName:'Google Maps - Transit & Food', appStoreId: '585027354', appStoreLocale: 'us' })
     .catch((err) => {
       console.log(err)
     });
