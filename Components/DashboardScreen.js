@@ -17,9 +17,10 @@ class Dashboard extends Component {
           {this.props.trips.length > 0 ? (
             <AllTrips trips={this.props.trips}/>
           ) : (
-            <SafeAreaView>
+            <View>
+              <Navbar />
               <Text style={styles.noTrips}>No Trips Available</Text>
-            </SafeAreaView>
+            </View>
           )}
         </View>
       </View>
