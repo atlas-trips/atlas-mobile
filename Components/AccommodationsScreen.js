@@ -1,9 +1,10 @@
 import React from 'react';
 import {getAccommodations} from '../store/accommodation';
 import {connect} from 'react-redux';
-import { StyleSheet, Text, SafeAreaView, View, Button } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, Image, View, Button } from 'react-native';
 import Navbar from './Navbar';
 
+const hotel = require('../assets/images/hotel.png')
 
 class AccommodationsScreen extends React.Component {
   constructor(props) {
@@ -21,17 +22,15 @@ class AccommodationsScreen extends React.Component {
         {this.props.accommodations.length > 0
           ? this.props.accommodations.map(accom => {
               return (
-                <View key={`accom${accom.id}`}>
-                  <Text>{accom.name}</Text>
-                  <Text>{accom.location}</Text>
-                  <Text>
-                    {accom.startDate.slice(0, 10)} -{' '}
-                    {accom.endDate.slice(0, 10)}
+                <View key={`accom${accom.id}`} style={styles.accom}>
+                  <Text h1 style={{fontSize: 30}}>{accom.name}</Text>                  
+                  <Text h3 style={{fontSize: 20}}>
+                    {'Check In: '+accom.startDate.slice(0, 10) + '\nCheck Out: '+accom.endDate.slice(0, 10)}
                   </Text>
                 </View>
               );
             })
-          : <Text>'No Accommodations Booked'</Text>}
+          : <Text h1>'No Accommodations Booked'</Text>}
       </View>
     ) : (
       <View>
@@ -55,6 +54,9 @@ const styles = StyleSheet.create({
     marginBottom: -5,
     marginTop: 15
   },
+  accom : {
+
+  }
 })
 
 const mapState = state => ({
