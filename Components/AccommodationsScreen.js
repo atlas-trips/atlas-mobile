@@ -31,7 +31,7 @@ class AccommodationsScreen extends React.Component {
                 </View>
               );
             })
-          : 'No Accommodations Booked'}
+          : <Text>'No Accommodations Booked'</Text>}
       </View>
     ) : (
       <View>

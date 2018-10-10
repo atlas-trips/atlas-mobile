@@ -30,19 +30,21 @@ class Activities extends Component {
         <View style={styles.header}>
           <Text style={styles.headerText}>Activities List:</Text>
         </View>
-        <View styles={styles.container}>
+        <View style={styles.container}>
         {!this.props.trip.activities.length
             ? null
             : this.props.trip.activities.map(activity => {
               return (       
-                <TouchableOpacity
+                <View key={activity.id}>
+                  <TouchableOpacity
                   onPress={() => this.handlePress(activity.location)}
-                  key={activity.id}
-                  style={styles.activity}
-                >
+                  >
+                 <View style={styles.activityContainer}  >
                   <Text style={{fontSize: 20}}>{activity.name}</Text>
-                  <Image source={openIcon} style={{height: 20, width: 20}} />
+                  <Image source={openIcon} style={{height: 25, width: 25}} />
+                </View>
                 </TouchableOpacity>
+                </View>
               );
             })
           }
@@ -63,15 +65,6 @@ class Activities extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  noTrip: {
-    textAlign: 'center',
-    fontSize: 20,
-    color: '#53aad9',
-    marginBottom: -5,
-    marginTop: 15
-  },
-})
 
 const mapStateToProps = state => ({
   user: state.user,
@@ -88,15 +81,7 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: '#00adef'
   },
-  activity: {
-    marginTop: 20,
-    marginBottom: 20,
-    backgroundColor: 'red',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    width: '70%'
-  },
+
   headerText: {
     color: 'white',
     fontSize: 30,
@@ -104,8 +89,28 @@ const styles = StyleSheet.create({
   },
   container: {
     display: 'flex',
+    justifyContent: 'space-around',
     alignItems: 'center',
-    justifyContent: 'center'
+    width: '100%'
+  },
+  activityContainer: {
+    display: 'flex',
+    marginTop: 20,
+    marginBottom: 20,
+    height: 70,
+    width: 300,
+    borderRadius: 10,
+    backgroundColor: '#ddeaff', 
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  noTrip: {
+    textAlign: 'center',
+    fontSize: 20,
+    color: '#53aad9',
+    marginBottom: -5,
+    marginTop: 15
   }
 });
 
