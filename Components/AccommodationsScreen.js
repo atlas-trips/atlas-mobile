@@ -1,7 +1,7 @@
 import React from 'react';
 import {getAccommodations} from '../store/accommodation';
 import {connect} from 'react-redux';
-import { Styelsheet, Text, SafeAreaView, View } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, Button } from 'react-native';
 import Navbar from './Navbar';
 
 
@@ -15,7 +15,7 @@ class AccommodationsScreen extends React.Component {
     this.props.getAccommodations(tripId);
   }
   render() {
-    return (
+    return this.props.trip.name ? (
       <View>
         <Navbar />
         {this.props.accommodations.length > 0
@@ -33,9 +33,29 @@ class AccommodationsScreen extends React.Component {
             })
           : 'No Accommodations Booked'}
       </View>
-    );
+    ) : (
+      <View>
+        <Navbar />
+        <View>
+          <Text style={styles.noTrip}>
+            You have not yet selected a trip. Please choose one from your
+          </Text>
+          <Button onPress={() => props.navigation.navigate('Dashboard')} title="dashboard."/>
+        </View>
+      </View>
+    )
   }
 }
+
+const styles = StyleSheet.create({
+  noTrip: {
+    textAlign: 'center',
+    fontSize: 20,
+    color: '#53aad9',
+    marginBottom: -5,
+    marginTop: 15
+  },
+})
 
 const mapState = state => ({
   accommodations: state.accommodation.accommodations,

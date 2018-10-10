@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import CalendarActivities from './CalendarActivities';
 import CalendarAccommodations from './CalendarAccommodations';
 import CalendarTransportation from './CalendarTransportation';
-import { Styelsheet, Text, SafeAreaView, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, ScrollView, Button } from 'react-native';
 import Navbar from './Navbar';
 
 class CalendarScreen extends Component {
@@ -17,7 +17,20 @@ class CalendarScreen extends Component {
   }
 
   render() {
-    const {schedule} = this.props;
+    const {schedule, trip} = this.props;
+    if (!trip.name) {
+      return (
+        <View>
+          <Navbar />
+          <View>
+            <Text style={styles.noTrip}>
+              You have not yet selected a trip. Please choose one from your
+            </Text>
+            <Button onPress={() => props.navigation.navigate('Dashboard')} title="dashboard."/>
+          </View>
+        </View>
+      )
+    }
     return schedule.length ? (
       <View>
         <Navbar />
@@ -63,6 +76,16 @@ class CalendarScreen extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  noTrip: {
+    textAlign: 'center',
+    fontSize: 20,
+    color: '#53aad9',
+    marginBottom: -5,
+    marginTop: 15
+  },
+})
 
 const mapStateToProps = state => ({
   trip: state.trip.selected,
