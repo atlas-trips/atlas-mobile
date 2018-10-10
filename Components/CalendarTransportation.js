@@ -1,5 +1,5 @@
 import React from 'react';
-import { Styelsheet, Text, SafeAreaView, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, ScrollView } from 'react-native';
 
 
 const CalendarTransportation = props => {
@@ -9,13 +9,20 @@ const CalendarTransportation = props => {
       {transportation.map(trans => {
         return (
           <View key={trans.id}>
-            <Text>{trans.name}</Text>
-            {trans.users.map((user,i) => <Text key={i}>{user}</Text>)}
+            <Text style={styles.sectionText}>{trans.name}</Text>
+            {trans.users.map((user,i) => <Text style={{marginLeft: 40}} key={i}>{user}</Text>)}
           </View>
         );
       })}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  sectionText: {
+    marginLeft: 20,
+    color: '#004f78'
+  }
+})
 
 export default CalendarTransportation;

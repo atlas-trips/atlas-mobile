@@ -1,5 +1,5 @@
 import React from 'react';
-import { Styelsheet, Text, SafeAreaView, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, ScrollView } from 'react-native';
 
 const CalendarActivities = props => {
   const {activities} = props;
@@ -8,13 +8,19 @@ const CalendarActivities = props => {
       {activities.map(act => {
         return (
           <View key={act.id}>
-            <Text>{act.name}</Text>
-            {act.users.map((user, i) => <Text key={i}>{user}</Text>)}
+            <Text style={styles.sectionText}>{act.name}</Text>
           </View>
         );
       })}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  sectionText: {
+    marginLeft: 20,
+    color: '#004f78'
+  }
+})
 
 export default CalendarActivities;

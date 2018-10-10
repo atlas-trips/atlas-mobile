@@ -17,7 +17,7 @@ const SingleTrip = props => {
           {trip.name}
         </Text>
         <Text style={styles.dates}>
-          {(new Date (trip.startDate.slice(0, 10))).toString().slice(0,16)} to{(new Date (trip.endDate.slice(0, 10))).toString().slice(0,16)}
+          {(new Date (trip.startDate.slice(0, 10))).toString().slice(0,16)} to {(new Date (trip.endDate.slice(0, 10))).toString().slice(0,16)}
         </Text>
         <View style={styles.container}>
           <ParticipantsOverview peeps={trip.users} />
