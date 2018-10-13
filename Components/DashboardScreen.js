@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import AllTrips from './AllTrips';
 import { fetchTrips } from '../store/trip';
-import { StyleSheet, Text, SafeAreaView, View, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, AsyncStorage } from 'react-native';
 import Navbar from './Navbar';
 
 const retrieveData = async (key) => {
@@ -30,7 +30,7 @@ class Dashboard extends Component {
     return (
       <View>
         <Navbar />
-        <View>
+        <ScrollView>
           {this.props.trips.length > 0 ? (
             <AllTrips trips={this.props.trips}/>
           ) : (
@@ -39,7 +39,7 @@ class Dashboard extends Component {
               <Text style={styles.noTrips}>No Trips Available</Text>
             </View>
           )}
-        </View>
+        </ScrollView>
       </View>
     )
   }

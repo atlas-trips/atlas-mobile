@@ -4,20 +4,62 @@ import {connect} from 'react-redux';
 import CalendarActivities from './CalendarActivities';
 import CalendarAccommodations from './CalendarAccommodations';
 import CalendarTransportation from './CalendarTransportation';
-import { StyleSheet, Text, View, ScrollView, Button } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Button, AsyncStorage } from 'react-native';
 import Navbar from './Navbar';
+
+const storeData = async (key, val) => {
+  try {
+    await AsyncStorage.setItem(key, val);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const retrieveData = async (key) => {
+  try {
+    const value = await AsyncStorage.getItem(key);
+    if (value !== null) {
+      return value;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 class CalendarScreen extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      offlineSchedule: {},
+      offlineTrip: {},
+    }
   }
 
-  componentDidMount() {
-    this.props.getSchedule(this.props.trip.id);
+  async componentDidMount() {
+    const storedTripString = await retrieveData(`${this.props.trip.name}`);
+    if (storedTripString) {
+      this.setState({
+        offlineTrip: JSON.parse(storedTripString),
+      })
+    } else {
+      await storeData(`${this.props.trip.name}`, JSON.stringify(this.props.trip));
+    }
+    const storedScheduleString = await retrieveData(`${this.props.trip.name}Schedule`);
+    if (storedScheduleString) {
+      this.setState({
+        offlineSchedule: JSON.parse(storedScheduleString),
+      })
+    } else {
+      await this.props.getSchedule(this.props.trip.id);
+      await storeData(`${this.props.trip.name}Schedule`, JSON.stringify(this.props.schedule));
+    }
   }
 
   render() {
-    const {schedule, trip} = this.props;
+    const schedule = this.state.offlineSchedule ? this.state.offlineSchedule : this.props.schedule;
+    const trip = this.state.offlineTrip ? this.state.offlineTrip : this.props.trip;
     if (!trip.name) {
       return (
         <View>
