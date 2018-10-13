@@ -6,12 +6,32 @@ import {
   TextInput,
   TouchableHighlight,
   Image,
-  View
+  View,
+  AsyncStorage
 } from 'react-native';
 import { connect } from 'react-redux';
 import { auth } from '../store/store';
 import LoginBackground from './LoginBackground';
-const err = require('../assets/images/err.png')
+const err = require('../assets/images/err.png');
+
+const storeData = async (key, val) => {
+  try {
+    await AsyncStorage.setItem(key, val);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const retrieveData = async (key) => {
+  try {
+    const value = await AsyncStorage.getItem(key);
+    if (value !== null) {
+      return value;
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 class LoginScreen extends Component {
   constructor(props) {
@@ -30,13 +50,23 @@ class LoginScreen extends Component {
     if(email.length && password.length) {
       await this.props.submitLogin(email, password, formName);
       if(this.props.user.id){
+        await storeData('user', JSON.stringify(this.props.user));
+        console.log('user stored')
+
+        console.log('user is:', JSON.parse(offlineUser));
         this.props.navigation.navigate('Dashboard');
       } else {
         this.setState({failedLogin: !this.state.failedLogin})
       }
     }
-    
-    
+  }
+
+  async componentDidMount() {
+    const offlineUserString = await retrieveData('user');
+    const offlineUser = JSON.parse(offlineUserString);
+    if (offlineUser["name"]) {
+      this.props.navigation.navigate('Dashboard', {userExists: true});
+    }
   }
 
   static navigationOptions = {
@@ -61,7 +91,7 @@ class LoginScreen extends Component {
               secureTextEntry={true}
               onChangeText={text => this.setState({ password: text })}
             />
-            <TouchableHighlight style={[styles.button, (this.state.email && this.state.password)? styles.enabled: styles.disabled] } 
+            <TouchableHighlight style={[styles.button, (this.state.email && this.state.password)? styles.enabled: styles.disabled] }
             onPress={this.handlePress}
             underlayColor={(this.state.email && this.state.password) ? '#ddeaff' : '#929292'}
             >
