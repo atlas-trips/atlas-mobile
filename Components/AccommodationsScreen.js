@@ -1,29 +1,67 @@
 import React from 'react';
 import {getAccommodations} from '../store/accommodation';
 import {connect} from 'react-redux';
-import { StyleSheet, Text, SafeAreaView, Image, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, AsyncStorage } from 'react-native';
 import Navbar from './Navbar';
 
-const hotel = require('../assets/images/hotel.png')
+const storeData = async (key, val) => {
+  try {
+    await AsyncStorage.setItem(key, val);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const retrieveData = async (key) => {
+  try {
+    const value = await AsyncStorage.getItem(key);
+    if (value !== null) {
+      return value;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 class AccommodationsScreen extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      offlineAccommodations: [],
+      offlineTrip: {},
+    }
   }
 
-  componentDidMount() {
-    const tripId = this.props.trip.id;
-    this.props.getAccommodations(tripId);
+  async componentDidMount() {
+    const storedTripString = await retrieveData(`${this.props.trip.name}`);
+    if (storedTripString) {
+      const storedTrip = JSON.parse(storedTripString);
+      this.setState({
+        offlineTrip: storedTrip,
+        offlineAccommodations: storedTrip["accommodation"]
+      })
+    } else {
+      await storeData(`${this.props.trip.name}`, JSON.stringify(this.props.trip));
+    }
+
+    if (!this.state.offlineAccommodations) {
+      await this.props.getAccommodations(this.props.trip.id);
+    }
   }
+
   render() {
-    return this.props.trip.name ? (
+    const accommodations = this.state.offlineAccommodations ? this.state.offlineAccommodations : this.props.accommodadtions;
+    const trip = this.state.offlineTrip ? this.state.offlineTrip : this.props.trip;
+    return trip.name ? (
       <View>
         <Navbar />
-        {this.props.accommodations.length > 0
-          ? this.props.accommodations.map(accom => {
+        {accommodations.length > 0
+          ? accommodations.map(accom => {
               return (
                 <View key={`accom${accom.id}`} style={styles.accom}>
-                  <Text h1 style={{fontSize: 30}}>{accom.name}</Text>                  
+                  <Text h1 style={{fontSize: 30}}>{accom.name}</Text>
                   <Text h3 style={{fontSize: 20}}>
                     {'Check In: '+accom.startDate.slice(0, 10) + '\nCheck Out: '+accom.endDate.slice(0, 10)}
                   </Text>

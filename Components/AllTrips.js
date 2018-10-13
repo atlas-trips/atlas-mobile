@@ -49,6 +49,7 @@ const AllTrips = props => {
           </View>
         )
       })}
+      <View style={styles.bottomBuffer}></View>
     </ScrollView>
   )
 }
@@ -104,6 +105,9 @@ const styles = StyleSheet.create({
     width: 2,
     height: 65,
     backgroundColor: '#ff0f83',
+  },
+  bottomBuffer: {
+    marginBottom: 90,
   }
 });
 

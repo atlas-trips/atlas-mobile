@@ -1,19 +1,56 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { fetchActivities } from '../store/trip';
-import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Image, Button } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Image, Button, AsyncStorage } from 'react-native';
 import Navbar from './Navbar';
 import AppLink from 'react-native-app-link';
 const openIcon = require('../assets/images/open.png')
 
+const storeData = async (key, val) => {
+  try {
+    await AsyncStorage.setItem(key, val);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const retrieveData = async (key) => {
+  try {
+    const value = await AsyncStorage.getItem(key);
+    if (value !== null) {
+      return value;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 class Activities extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      offlineActivities: {},
+      offlineTrip: {},
+    }
   }
 
-  componentDidMount() {
-    this.props.fetchActivities(this.props.trip.id);
+  async componentDidMount() {
+    const storedTripString = await retrieveData(`${this.props.trip.name}`);
+    if (storedTripString) {
+      const storedTrip = JSON.parse(storedTripString);
+      this.setState({
+        offlineTrip: storedTrip,
+        offlineActivities: storedTrip["activities"]
+      })
+    } else {
+      await storeData(`${this.props.trip.name}`, JSON.stringify(this.props.trip));
+    }
+
+    if (!this.state.offlineActivities) {
+      await this.props.fetchActivities(this.props.trip.id);
+    }
   }
 
   handlePress(activity) {
@@ -24,16 +61,18 @@ class Activities extends Component {
   }
 
   render() {
-    return this.props.trip.name ? (
+    const activities = this.state.offlineActivities ? this.state.offlineActivities : this.props.trip.activities;
+    const trip = this.state.offlineTrip ? this.state.offlineTrip : this.props.trip;
+    return trip.name ? (
       <View>
         <Navbar />
         <View style={styles.header}>
           <Text style={styles.headerText}>Activities List:</Text>
         </View>
         <ScrollView contentContainerStyle={styles.container}>
-        {!this.props.trip.activities.length
+        {!activities.length
             ? null
-            : this.props.trip.activities.map(activity => {
+            : activities.map(activity => {
               return (
                 <View key={activity.id}>
                   <TouchableOpacity

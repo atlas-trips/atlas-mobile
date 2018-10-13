@@ -2,18 +2,35 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import AllTrips from './AllTrips';
 import { fetchTrips } from '../store/trip';
-import { StyleSheet, Text, SafeAreaView, View } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, AsyncStorage } from 'react-native';
 import Navbar from './Navbar';
 
+const retrieveData = async (key) => {
+  try {
+    const value = await AsyncStorage.getItem(key);
+    if (value !== null) {
+      return value;
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 class Dashboard extends Component {
-  componentDidMount() {
-    this.props.fetchTrips(this.props.user.id);
+  async componentDidMount() {
+    if (this.props.navigation.state.params.userExists) {
+      const offlineUserString = await retrieveData('user');
+      const offlineUser = JSON.parse(offlineUserString);
+      this.props.fetchTrips(offlineUser["id"]);
+    } else {
+      this.props.fetchTrips(this.props.user.id);
+    }
   }
   render() {
     return (
       <View>
         <Navbar />
-        <View>
+        <ScrollView>
           {this.props.trips.length > 0 ? (
             <AllTrips trips={this.props.trips}/>
           ) : (
@@ -22,7 +39,7 @@ class Dashboard extends Component {
               <Text style={styles.noTrips}>No Trips Available</Text>
             </View>
           )}
-        </View>
+        </ScrollView>
       </View>
     )
   }
