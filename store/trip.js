@@ -42,7 +42,7 @@ const removeActivity = id => ({
 
 export const fetchTrips = id => async dispatch => {
   try {
-    const res = await axios.get(`http://atlas-trips.herokuapp.com/api/users/${id}/trips`);
+    const res = await axios.get(`https://atlas-trips.herokuapp.com/api/users/${id}/trips`);
     dispatch(getTrips(res.data));
   } catch (err) {
     console.log(err);
@@ -51,7 +51,7 @@ export const fetchTrips = id => async dispatch => {
 
 export const fetchSelected = tripId => async dispatch => {
   try {
-    const trip = await axios.get(`http://atlas-trips.herokuapp.com/api/trips/${tripId}`);
+    const trip = await axios.get(`https://atlas-trips.herokuapp.com/api/trips/${tripId}`);
     dispatch(getSelected(trip.data));
   } catch (err) {
     console.log(err);
@@ -60,7 +60,7 @@ export const fetchSelected = tripId => async dispatch => {
 
 export const fetchRefTrip = tripLink => async dispatch => {
   try {
-    const trip = await axios.get(`http://atlas-trips.herokuapp.com/api/trips/join/${tripLink}`);
+    const trip = await axios.get(`https://atlas-trips.herokuapp.com/api/trips/join/${tripLink}`);
     dispatch(getRefTrip(trip.data));
   } catch (err) {
     console.log(err);
@@ -69,7 +69,7 @@ export const fetchRefTrip = tripLink => async dispatch => {
 
 export const makeTrip = trip => async dispatch => {
   try {
-    const {data: newTrip} = await axios.post('http://atlas-trips.herokuapp.com/api/trips', trip);
+    const {data: newTrip} = await axios.post('https://atlas-trips.herokuapp.com/api/trips', trip);
     dispatch(setNewTrip(newTrip));
   } catch (error) {
     console.log(error);
@@ -78,7 +78,7 @@ export const makeTrip = trip => async dispatch => {
 
 export const fetchActivities = id => async dispatch => {
   try {
-    const res = await axios.get(`http://atlas-trips.herokuapp.com/api/trips/${id}/activities`);
+    const res = await axios.get(`https://atlas-trips.herokuapp.com/api/trips/${id}/activities`);
     dispatch(getActivities(res.data));
   } catch (err) {
     console.log(err);
@@ -88,7 +88,7 @@ export const fetchActivities = id => async dispatch => {
 export const sendActivityInfo = (activityInfo, tripId) => async dispatch => {
   try {
     const {data: newAct} = await axios.post(
-      `http://atlas-trips.herokuapp.com/api/trips/${tripId}/activities`,
+      `https://atlas-trips.herokuapp.com/api/trips/${tripId}/activities`,
       activityInfo
     );
     dispatch(setActivity(newAct));
@@ -99,7 +99,7 @@ export const sendActivityInfo = (activityInfo, tripId) => async dispatch => {
 
 export const deleteActivity = (tripId, actId) => async dispatch => {
   try {
-    await axios.delete(`http://atlas-trips.herokuapp.com/api/trips/${tripId}/activities/${actId}`);
+    await axios.delete(`https://atlas-trips.herokuapp.com/api/trips/${tripId}/activities/${actId}`);
     dispatch(removeActivity(actId));
   } catch (err) {
     console.log(err);
@@ -108,7 +108,7 @@ export const deleteActivity = (tripId, actId) => async dispatch => {
 
 export const getTripCalendar = tripId => async dispatch => {
   try {
-    const {data: calendar} = await axios.get(`http://atlas-trips.herokuapp.com/api/trips/${tripId}/all`);
+    const {data: calendar} = await axios.get(`https://atlas-trips.herokuapp.com/api/trips/${tripId}/all`);
     dispatch(setTripCalendar(calendar));
   } catch (error) {
     console.log(error);

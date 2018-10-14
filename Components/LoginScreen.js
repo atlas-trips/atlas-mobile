@@ -51,9 +51,6 @@ class LoginScreen extends Component {
       await this.props.submitLogin(email, password, formName);
       if(this.props.user.id){
         await storeData('user', JSON.stringify(this.props.user));
-        console.log('user stored')
-
-        console.log('user is:', JSON.parse(offlineUser));
         this.props.navigation.navigate('Dashboard');
       } else {
         this.setState({failedLogin: !this.state.failedLogin})
@@ -64,9 +61,9 @@ class LoginScreen extends Component {
   async componentDidMount() {
     const offlineUserString = await retrieveData('user');
     const offlineUser = JSON.parse(offlineUserString);
-    if (offlineUser["name"]) {
-      this.props.navigation.navigate('Dashboard', {userExists: true});
-    }
+    // if (offlineUser["name"]) {
+    //   this.props.navigation.navigate('Dashboard', {userExists: true});
+    // }
   }
 
   static navigationOptions = {
